@@ -121,7 +121,7 @@ export const ParkingDashboard: React.FC = () => {
     setIsAddingNew(false);
   };
 
-  const activeSessionForDetail = activeSessions.find((s) => s.id === selectedSessionId);
+  const sessionForDetail = [...activeSessions, ...historySessions].find((s) => s.id === selectedSessionId);
 
   // Loading skeleton state (satisfies SSR Hydration Safety)
   if (status === "loading") {
@@ -149,12 +149,12 @@ export const ParkingDashboard: React.FC = () => {
     );
   }
 
-  // --- SUB-FLOW: Detailed inspection of a specific active session ---
-  if (activeSessionForDetail) {
+  // --- SUB-FLOW: Detailed inspection of a specific session ---
+  if (sessionForDetail) {
     return (
       <div className="w-full max-w-md mx-auto">
         <SessionDetail
-          session={activeSessionForDetail}
+          session={sessionForDetail}
           onBack={() => setSelectedSessionId(null)}
           onFoundCar={(id) => {
             foundCar(id);
@@ -331,51 +331,30 @@ export const ParkingDashboard: React.FC = () => {
     );
   }
 
-  // --- RETRIEVAL STATE (Either single session or multi-session list) ---
+  // --- RETRIEVAL STATE ---
   return (
     <div className="w-full max-w-md mx-auto flex flex-col space-y-6">
       {/* 
-        STATE 2: One active session (Retrieval Mode)
+        Multiple active sessions
       */}
-      {activeSessions.length === 1 ? (
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-black text-neutral-200">Active Spot</h2>
-            <Button variant="glass" size="sm" onClick={() => setIsAddingNew(true)}>
-              + Add Vehicle
-            </Button>
-          </div>
-
-          {/* Render single session layout immediately */}
-          <SessionDetail
-            session={activeSessions[0]}
-            onBack={() => { }}
-            onFoundCar={foundCar}
-          />
+      <div className="flex flex-col space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-black text-neutral-200">Active Spots</h2>
+          <Button variant="electric" size="sm" onClick={() => setIsAddingNew(true)}>
+            + Save New Spot
+          </Button>
         </div>
-      ) : (
-        /* 
-          STATE 3: Multiple active sessions (Retrieval List Mode)
-        */
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-black text-neutral-200">Active Spots</h2>
-            <Button variant="electric" size="sm" onClick={() => setIsAddingNew(true)}>
-              + Save New Spot
-            </Button>
-          </div>
 
-          <div className="flex flex-col space-y-3">
-            {activeSessions.map((session) => (
-              <SessionCard
-                key={session.id}
-                session={session}
-                onClick={() => setSelectedSessionId(session.id)}
-              />
-            ))}
-          </div>
+        <div className="flex flex-col space-y-3">
+          {activeSessions.map((session) => (
+            <SessionCard
+              key={session.id}
+              session={session}
+              onClick={() => setSelectedSessionId(session.id)}
+            />
+          ))}
         </div>
-      )}
+      </div>
 
       {/* 
         HISTORY DRAWER: past completed/expired sessions 
@@ -405,18 +384,20 @@ export const ParkingDashboard: React.FC = () => {
 
                 <div className="flex flex-col space-y-2.5 max-h-[250px] overflow-y-auto pr-1">
                   {historySessions.map((session) => {
-                    const completedTime = session.completedAt
-                      ? new Date(session.completedAt).toLocaleString([], {
+                    const startedTime = session.startTime
+                      ? new Date(session.startTime).toLocaleString([], {
                         month: "short",
                         day: "numeric",
                         hour: "2-digit",
                         minute: "2-digit",
                       })
                       : "Expired";
+
                     return (
-                      <div
+                      <button
                         key={session.id}
-                        className="flex items-center justify-between p-3.5 bg-neutral-900/30 border border-neutral-900 rounded-xl text-xs"
+                        onClick={() => setSelectedSessionId(session.id)}
+                        className="flex items-center justify-between p-4 bg-neutral-900/60 hover:bg-neutral-800/60 border border-neutral-800 hover:border-neutral-700/80 rounded-2xl cursor-pointer transition-all duration-300 backdrop-blur-md focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 text-xs"
                       >
                         <div className="flex flex-col space-y-1">
                           <span className="font-bold text-neutral-300">{session.vehicleLabel}</span>
@@ -432,9 +413,9 @@ export const ParkingDashboard: React.FC = () => {
                           >
                             {session.status === "completed" ? "Found" : "Expired"}
                           </span>
-                          <span className="text-neutral-600 text-[10px]">{completedTime}</span>
+                          <span className="text-neutral-600 text-[10px]">{startedTime}</span>
                         </div>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
