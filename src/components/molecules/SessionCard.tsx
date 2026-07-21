@@ -55,15 +55,16 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onClick }) =>
     };
 
     updateDisplayTime();
-    const interval = setInterval(updateDisplayTime, 10000); // update every 10 seconds is plenty for card summaries
+    const interval = setInterval(updateDisplayTime, 10000);
 
     return () => clearInterval(interval);
   }, [session.expiryTime, session.status]);
 
   return (
-    <div
+    <button
+      type="button"
       onClick={onClick}
-      className="group relative flex items-center justify-between p-4 bg-neutral-900/60 hover:bg-neutral-800/60 border border-neutral-800 hover:border-neutral-700/80 rounded-2xl cursor-pointer transition-all duration-300 backdrop-blur-md active:scale-[0.98] overflow-hidden"
+      className="group relative flex w-full text-left items-center justify-between p-4 bg-neutral-900/60 hover:bg-neutral-800/60 border border-neutral-800 hover:border-neutral-700/80 rounded-2xl cursor-pointer transition-all duration-300 backdrop-blur-md active:scale-[0.98] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
     >
       {/* Background glow effects */}
       <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/0 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -74,11 +75,12 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onClick }) =>
           {photoUrl ? (
             <img
               src={photoUrl}
-              alt={session.vehicleLabel}
+              alt=""
               className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
             <svg
+              aria-hidden="true"
               className="w-6 h-6 text-neutral-500"
               fill="none"
               stroke="currentColor"
@@ -126,10 +128,10 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onClick }) =>
           </span>
           <StatusDot status={session.status} expiryTime={session.expiryTime} />
         </div>
-        <span className="text-[10px] text-neutral-500 uppercase tracking-widest font-semibold group-hover:text-orange-500/70 transition-colors duration-300">
+        <span aria-hidden="true" className="text-[10px] text-neutral-500 uppercase tracking-widest font-semibold group-hover:text-orange-500/70 transition-colors duration-300">
           View Detail &rarr;
         </span>
       </div>
-    </div>
+    </button>
   );
 };

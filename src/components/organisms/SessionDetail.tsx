@@ -116,7 +116,7 @@ export const SessionDetail: React.FC<SessionDetailProps> = ({
 
       {/* Action Commands */}
       <div className="flex flex-col space-y-2 pt-2">
-        {session.status !== "completed" && (
+        {session.status === "active" && (
           <Button
             variant="primary"
             fullWidth
