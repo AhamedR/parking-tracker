@@ -1,0 +1,13 @@
+# Parking Tracker PWA
+> An offline-first web application that helps users save and recover their parking spots without relying on GPS.
+
+## Features
+- Save floor and bay numbers instantly.
+- Store photos locally using IndexedDB.
+- Set visual expiration timers.
+- Manage multiple vehicle labels (e.g., Toyota Aqua, Work Van).
+
+## Technical Details
+- Built with Next.js App Router and Serwist.
+- Data is stored locally on the device.
+- Requires no internet connection to function.

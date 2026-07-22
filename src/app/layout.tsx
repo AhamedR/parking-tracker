@@ -4,6 +4,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Parking Tracker PWA",
   description: "Save and recover your parking spot in seconds, offline-ready.",
+  openGraph: {
+    title: "Parking Tracker PWA",
+    description: "An offline-first web application to track parking spots without GPS.",
+    siteName: "Parking Tracker",
+    type: "website",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -27,8 +33,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Parking Tracker",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "NZD"
+    },
+    "description": "An offline-first web application for tracking parking spots without GPS."
+  };
+
   return (
     <html lang="en" className="h-full antialiased dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-neutral-950 text-neutral-100">
         {children}
       </body>

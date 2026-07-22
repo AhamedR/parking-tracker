@@ -3,11 +3,11 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Parking Tracker PWA",
-    short_name: "ParkingTracker",
+    short_name: "Parking Tracker",
     description: "Save and recover your parking spot in seconds, offline-ready.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a0a",
+    background_color: "#161A1B",
     theme_color: "#ff6b00",
     icons: [
       {
