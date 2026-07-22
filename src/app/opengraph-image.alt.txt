@@ -1,0 +1,1 @@
+Safe Parking Tracker app interface showing offline parking spot capture and timers.
