@@ -1,13 +1,19 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+const baseUrl = process.env.SITE_URL || 'http://localhost:3000'
 
 export const metadata: Metadata = {
-  title: "Parking Tracker PWA",
+  metadataBase: new URL(baseUrl),
+  title: "Safe Parking Tracker",
   description: "Save and recover your parking spot in seconds, offline-ready.",
+  verification: {
+    google: 'DRUP8bAO5gXudSg1jlfTwy25qzJIQrItZUjo8_WiAis',
+  },
   openGraph: {
-    title: "Parking Tracker PWA",
+    title: "Safe Parking Tracker",
     description: "An offline-first web application to track parking spots without GPS.",
-    siteName: "Parking Tracker",
+    siteName: "Safe Parking Tracker",
     type: "website",
   },
   appleWebApp: {
@@ -57,6 +63,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-neutral-950 text-neutral-100">
         {children}
+        <Analytics />
       </body>
     </html>
   );
