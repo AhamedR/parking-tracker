@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 const baseUrl = process.env.SITE_URL || 'http://localhost:3000'
 
 export const metadata: Metadata = {
@@ -62,6 +63,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-neutral-950 text-neutral-100">
         {children}
+        <Analytics />
       </body>
     </html>
   );
