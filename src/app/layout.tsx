@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 const baseUrl = process.env.SITE_URL || 'http://localhost:3000'
 
 export const metadata: Metadata = {
@@ -42,17 +43,23 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Parking Tracker",
+    "name": "Safe Parking Tracker",
+    "url": process.env.SITE_URL || "http://localhost:3000",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
+    "browserRequirements": "Requires IndexedDB and Service Worker support",
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "NZD"
     },
-    "description": "An offline-first web application for tracking parking spots without GPS."
+    "description": "An offline-first web application to track parking spots without GPS signal.",
+    "featureList": [
+      "Offline location capture",
+      "Local photo storage",
+      "Visual expiration timers"
+    ]
   };
-
   return (
     <html lang="en" className="h-full antialiased dark">
       <head>
@@ -64,6 +71,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-neutral-950 text-neutral-100">
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
