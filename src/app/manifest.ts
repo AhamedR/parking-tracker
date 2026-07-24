@@ -54,5 +54,19 @@ export default function manifest(): MetadataRoute.Manifest {
         label: 'Desktop view showing detailed session',
       },
     ],
+    shortcuts: [
+      {
+        name: 'Save New Spot',
+        short_name: 'New Spot',
+        description: 'Quickly record a new parking location',
+        url: '/new',
+        icons: [
+          {
+            src: '/icon-192x192.png',
+            sizes: '192x192',
+          },
+        ],
+      },
+    ],
   };
 }
