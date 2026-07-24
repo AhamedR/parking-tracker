@@ -56,8 +56,8 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       {
-        name: 'Save New Spot',
-        short_name: 'New Spot',
+        name: 'Add new session',
+        short_name: 'Add Session',
         description: 'Quickly record a new parking location',
         url: '/new',
         icons: [
