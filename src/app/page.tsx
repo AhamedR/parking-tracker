@@ -13,13 +13,6 @@ export default function ParkingDashboard() {
   const { activeSessions, historySessions, status, clearOldHistory } = useSessions();
   const [showHistory, setShowHistory] = useState(false);
 
-  // Auto-redirect to the new spot form if there are no active sessions
-  useEffect(() => {
-    if (status === "ready" && activeSessions.length === 0) {
-      router.push("/new");
-    }
-  }, [activeSessions.length, status, router]);
-
   if (status === "loading") {
     return (
       <div className="w-full max-w-md mx-auto p-6 space-y-6">
@@ -34,12 +27,14 @@ export default function ParkingDashboard() {
     <div className="w-full max-w-md mx-auto flex flex-col space-y-6">
       <div className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-black text-neutral-200">Active Spots</h2>
-          <Link href="/new">
-            <Button variant="electric" size="sm">
-              + Save New Spot
-            </Button>
-          </Link>
+          <h2 className="text-lg font-black text-neutral-200">Active Sessions</h2>
+          {activeSessions.length > 0 && (
+            <Link href="/new">
+              <Button variant="electric" size="sm">
+                + Add a new session
+              </Button>
+            </Link>
+          )}
         </div>
 
         <div className="flex flex-col space-y-3">
@@ -49,9 +44,16 @@ export default function ParkingDashboard() {
             </Link>
           ))}
           {activeSessions.length === 0 && (
-            <p className="text-xs text-neutral-500 text-center py-6">
-              No active sessions recorded.
-            </p>
+            <div className="flex flex-col items-center justify-center py-6 space-y-4">
+              <p className="text-xs text-neutral-500">
+                No active sessions recorded.
+              </p>
+              <Link href="/new">
+                <Button variant="electric" size="sm">
+                  + Add a new session
+                </Button>
+              </Link>
+            </div>
           )}
         </div>
       </div>
