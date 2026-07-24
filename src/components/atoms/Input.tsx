@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -12,7 +12,8 @@ export const Input: React.FC<InputProps> = ({
   id,
   ...props
 }) => {
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+  const generatedId = useId();
+  const inputId = id || generatedId;
 
   return (
     <div className="flex flex-col space-y-1.5 w-full">
@@ -26,9 +27,8 @@ export const Input: React.FC<InputProps> = ({
       )}
       <input
         id={inputId}
-        className={`w-full px-4 py-3 bg-neutral-900/60 border border-neutral-800 text-neutral-100 rounded-xl focus:outline-none focus:border-orange-500/80 focus:ring-1 focus:ring-orange-500/50 placeholder-neutral-500 transition-all duration-300 text-sm ${
-          error ? "border-rose-500/80 focus:border-rose-500 focus:ring-rose-500/50" : ""
-        } ${className}`}
+        className={`w-full px-4 py-3 bg-neutral-900/60 border border-neutral-800 text-neutral-100 rounded-xl focus:outline-none focus:border-orange-500/80 focus:ring-1 focus:ring-orange-500/50 placeholder-neutral-500 transition-all duration-300 text-sm ${error ? "border-rose-500/80 focus:border-rose-500 focus:ring-rose-500/50" : ""
+          } ${className}`}
         {...props}
       />
       {error && (

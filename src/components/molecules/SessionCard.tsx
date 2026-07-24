@@ -6,10 +6,9 @@ import { StatusDot } from "../atoms/StatusDot";
 
 interface SessionCardProps {
   session: Session;
-  onClick: () => void;
 }
 
-export const SessionCard: React.FC<SessionCardProps> = ({ session, onClick }) => {
+export const SessionCard: React.FC<SessionCardProps> = ({ session }) => {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [displayTime, setDisplayTime] = useState<string>("");
 
@@ -61,9 +60,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onClick }) =>
   }, [session.expiryTime, session.status]);
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
+    <div
       className="group relative flex w-full text-left items-center justify-between p-4 bg-neutral-900/60 hover:bg-neutral-800/60 border border-neutral-800 hover:border-neutral-700/80 rounded-2xl cursor-pointer transition-all duration-300 backdrop-blur-md active:scale-[0.98] overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
     >
       {/* Background glow effects */}
@@ -132,6 +129,6 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, onClick }) =>
           View Detail &rarr;
         </span>
       </div>
-    </button>
+    </div>
   );
 };
