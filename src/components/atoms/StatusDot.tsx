@@ -1,5 +1,3 @@
-import React from "react";
-
 interface StatusDotProps {
   status: "active" | "completed" | "expired";
   expiryTime: number;

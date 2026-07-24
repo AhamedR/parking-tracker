@@ -1,4 +1,3 @@
-import React from "react";
 import { Input } from "../atoms/Input";
 
 interface VehicleLabelInputProps {
@@ -35,11 +34,10 @@ export const VehicleLabelInput: React.FC<VehicleLabelInputProps> = ({
               key={label}
               type="button"
               onClick={() => onChange(label)}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-xl border transition-all duration-300 active:scale-95 ${
-                isSelected
+              className={`px-3 py-1.5 text-xs font-semibold rounded-xl border transition-all duration-300 active:scale-95 ${isSelected
                   ? "bg-orange-500/20 text-orange-500 border-orange-500/50 shadow-[0_0_12px_rgba(249,115,22,0.15)]"
                   : "bg-neutral-900/40 text-neutral-400 border-neutral-800 hover:border-neutral-700/80 hover:text-neutral-300"
-              }`}
+                }`}
             >
               {label}
             </button>
